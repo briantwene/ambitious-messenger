@@ -69,6 +69,10 @@ const acceptFriendRequest = async (requestId, user_id, friend_id) => {
     // where: { id: requestId},?? do need write the 'requestId' to friendship
     data: { user_id: user_id, friend_id: friend_id, status: 1 }, //1: Accepted
   });
+  await prisma.friendRequests.update({
+    where: { id: requestId },
+    data: { status: 1 }, //1: Accepted
+  });
   return updatedFriendship;
 };
 
