@@ -42,6 +42,7 @@ const getAllPendingRequests = async (userId) => {
           username: true,
         },
       },
+      id: true,
       sender_id: true,
       receiver_id: true,
       status: true,
@@ -60,7 +61,7 @@ const getAllFriendships = async (userId) => {
     },
     select: {
       id: true,
-      friend: { select: { user_id: true, username: true }, },
+      friend: { select: { user_id: true, username: true } },
     },
   });
   return friendships;
@@ -74,12 +75,10 @@ const acceptFriendRequest = async (requestId, user_id, friend_id) => {
   });
   await prisma.friendRequests.update({
     where: { id: requestId },
-    data: { status: 1 } //1: Accepted
+    data: { status: 1 }, //1: Accepted
   });
   return updatedFriendship;
 };
-
-
 
 // Decline a friend request
 const declineFriendRequest = async (requestId) => {
