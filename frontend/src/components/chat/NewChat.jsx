@@ -106,7 +106,7 @@ function NewChat() {
 
     const newChatData = {
       isPrivate: false, // TODO
-      members: selectedUsers.map((user) => user.username),
+      members: selectedUsers.map(({ friend }) => friend.username),
     };
     console.log(newChatData);
     dispatch(createChat(newChatData));
