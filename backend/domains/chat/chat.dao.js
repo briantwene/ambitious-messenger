@@ -27,13 +27,17 @@ const add = async (members, chatId) => {
       },
     });
 
-    const createdMembers = await prisma.member.createMany({
+    await prisma.member.createMany({
       data: users.map(({ username, user_id }) => ({
         username: username,
         chat_id: chatId,
         user_id: user_id,
         joined_date: new Date(),
       })),
+    });
+
+    const createdMembers = await prisma.member.findMany({
+      where: { chat_id: chatId },
     });
 
     return createdMembers;

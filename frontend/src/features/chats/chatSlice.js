@@ -64,8 +64,8 @@ export const chatSlice = createSlice({
       })
       .addCase(createChat.fulfilled, (state, action) => {
         state.newChatStatus = "succeeded";
-        console.log(action.payload.newChat.chat_id);
-        state.newChatId = action.payload.newChat.chat_id;
+        state.allUserChats = [...state.allUserChats, action.payload];
+        state.newChatId = action.payload.chat_id;
       })
       .addCase(createChat.rejected, (state, action) => {
         state.newChatStatus = "failed";
