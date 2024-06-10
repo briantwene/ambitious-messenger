@@ -54,21 +54,16 @@ const initializeSocket = (server) => {
       console.log("Received message:", message);
       const date = new Date().toISOString();
       const saveMessage = await createMessage(from, message_text, date, chat_id);
-      console.log("Message saved:", saveMessage);
       //send users in the to variable an array
       for (const user of to) {
         const toSocketId = onlineUsers[user];
         console.log("toSocketId", toSocketId);
         if (!toSocketId) {
           console.log("User is not online:", user);
-          continue;
         }
-        if (user !== from) {
-          socket.to(toSocketId).emit("message-received", saveMessage);
-        }
+        io.to(toSocketId).emit("message-received", saveMessage);
       }
       socket.emit("message-received", saveMessage);
-      //socket.emit("message-received", saveMessage);
     });
 
     socket.on("message-delete", async (message) => {
