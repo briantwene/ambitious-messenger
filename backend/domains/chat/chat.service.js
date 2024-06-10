@@ -43,7 +43,7 @@ const createChat = async (members, user) => {
     // the chat is private..
     if (isPrivate) {
       // just get the name of the user other than the user that requested
-      chat_name = newMembers.find((member) => member.username != user.username).username;
+      chat_name = newMembers.find((member) => member.username != user).username;
     } else {
       // for group chats if there is a name already use that
       if (newChat.chat_name?.trim()) {

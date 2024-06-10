@@ -61,9 +61,7 @@ function NewChat() {
     setSearchText(event.target.value);
   };
 
-  const filteredUsers = friendsList.filter((user) =>
-    user.friend.username.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredUsers = friendsList.filter((user) => user.username.toLowerCase().includes(searchText.toLowerCase()));
 
   const handleUserCheckboxChange = (user) => {
     console.log(user);
@@ -106,7 +104,7 @@ function NewChat() {
 
     const newChatData = {
       isPrivate: false, // TODO
-      members: selectedUsers.map(({ friend }) => friend.username),
+      members: selectedUsers.map((user) => user.username),
     };
     console.log(newChatData);
     dispatch(createChat(newChatData));
@@ -132,9 +130,9 @@ function NewChat() {
         <div className={styles.searchContainer} ref={searchScrollRef}>
           {selectedUsers.length > 0 &&
             selectedUsers.map((user) => (
-              <div key={user.friend.username} className={styles.searchContainer__selectedUser}>
-                <span key={user.friend.username} className={styles.searchContainer__username}>
-                  {`${user.friend.username}`}
+              <div key={user.username} className={styles.searchContainer__selectedUser}>
+                <span key={user.username} className={styles.searchContainer__username}>
+                  {`${user.username}`}
                 </span>
                 <RxCross2 className={styles.searchContainer__close} onClick={() => handleRemoveUser(user)} />
               </div>
@@ -152,21 +150,17 @@ function NewChat() {
         </div>
         <ul className={styles.userList}>
           {filteredUsers.map((user) => (
-            <li
-              key={user.friend.username}
-              className={styles.userList__item}
-              onClick={() => handleUserCheckboxChange(user)}
-            >
+            <li key={user.username} className={styles.userList__item} onClick={() => handleUserCheckboxChange(user)}>
               <div className={styles.userList__leftContainer}>
                 <div className={styles.userList__imageContainer}>
                   <img className={styles.userList__img} src={defaultUserPic} alt={"" /* TODO make this dynamic*/} />
                 </div>
-                <span className={styles.userList__username}>{user.friend.username}</span>
+                <span className={styles.userList__username}>{user.username}</span>
               </div>
               <input
                 type="checkbox"
-                key={user.friend.username}
-                checked={selectedUsers.some((selectedUser) => selectedUser.friend.username === user.friend.username)}
+                key={user.username}
+                checked={selectedUsers.some((selectedUser) => selectedUser.username === user.username)}
                 onChange={() => {}}
                 className={styles.userList__checkbox}
               />
