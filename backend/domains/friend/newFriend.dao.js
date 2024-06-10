@@ -61,10 +61,14 @@ const getAllFriendships = async (userId) => {
     },
     select: {
       id: true,
+      user: { select: { user_id: true, username: true } },
       friend: { select: { user_id: true, username: true } },
     },
   });
-  return friendships;
+
+  return friendships.map((friendship) => {
+    return friendship.user.user_id === userId ? friendship.friend : friendship.user;
+  });
 };
 
 // Accept a friend request

@@ -11,13 +11,15 @@ const {
   findExistingMember,
 } = require("./chat.dao");
 
-const createChat = async (isPrivate, members, user) => {
+const createChat = async (members, user) => {
   try {
     //will first check if room its private
     // TODO implement your own personal chat room for you only
 
     // since this is a new chat, would want the user to be added as a member in both cases
     const userWithMembers = [user, ...members];
+
+    const isPrivate = userWithMembers.length === 2;
 
     // check if the members exist
     if (isPrivate) {
@@ -35,7 +37,29 @@ const createChat = async (isPrivate, members, user) => {
     // add the members
     const newMembers = await addMember(userWithMembers, newChat.chat_id);
 
-    return { newChat, members: newMembers };
+    // modify the chat name based on if...
+    let chat_name;
+
+    // the chat is private..
+    if (isPrivate) {
+      // just get the name of the user other than the user that requested
+      chat_name = newMembers.find((member) => member.username != user).username;
+    } else {
+      // for group chats if there is a name already use that
+      if (newChat.chat_name?.trim()) {
+        chat_name = newChat.chat_name;
+      } else {
+        // or make the name a list of the users
+        // TODO make sure to format the string if there is more 4 or more members other than user
+        chat_name = newMembers.map((member) => member.username).join(",");
+      }
+    }
+
+    return {
+      ...newChat,
+      chat_name: chat_name,
+      members: newMembers.map((member) => member.username),
+    };
   } catch (error) {
     throw error;
   }
