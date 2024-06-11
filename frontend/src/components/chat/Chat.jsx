@@ -7,7 +7,7 @@ import Message from "./Message";
 // temporary
 import defaultUserPic from "../../assets/default_user_1.png";
 import { useDispatch, useSelector } from "react-redux";
-import { active, minimised } from "../../features/chats/chatSlice";
+import { active, minimised, getAllChats } from "../../features/chats/chatSlice";
 import Call from "../call/Call";
 import { createSelector, current } from "@reduxjs/toolkit";
 import Modal from "../Modal";
@@ -126,6 +126,10 @@ function Chat() {
       scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    dispatch(getAllChats());
+  }, [dispatch]);
 
   return (
     <div className={styles.pageContainer}>
