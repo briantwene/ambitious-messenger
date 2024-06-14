@@ -66,7 +66,7 @@ function NewChat() {
   const handleUserCheckboxChange = (user) => {
     console.log(user);
     setSelectedUsers((prevSelectedUsers) => {
-      const userIndex = prevSelectedUsers.findIndex((prevUser) => prevUser.friend.username === user.friend.username);
+      const userIndex = prevSelectedUsers.findIndex((prevUser) => prevUser.username === user.username);
       if (userIndex === -1) {
         // User not found, add the user
         console.log("User not found, add the user");
