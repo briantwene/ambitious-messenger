@@ -44,11 +44,11 @@ const register = async (req, res, next) => {
     const registeredUser = await registerUser(email, hashedPassword, username);
 
     // could add a verification step here for later
-    const { token, expires } = generateToken(registeredUser.username, registeredUser.user_id);
+    const { token, expires } = generateToken(registeredUser);
 
     res
       .type("json")
-      .cookie("token", token, { httpOnly: true }) // NOTE: in production, set secure: true
+      .cookie("token", token, { httpOnly: true, signed: true }) // NOTE: in production, set secure: true
       .send({
         user: {
           username: registeredUser.username,

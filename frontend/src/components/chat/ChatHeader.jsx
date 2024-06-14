@@ -43,7 +43,10 @@ function ChatHeader({ profilePic, name, status }) {
       <button onClick={openCallPanel} className={`${styles.buttonVoice} ${styles.button}`}>
         <MdLocalPhone className={`${styles.buttonIcon} ${styles.buttonIcon__phone}`} />
       </button>
-      <button onClick={openModal} className={`${styles.buttonOptions} ${styles.button}`}>
+      <button
+        // onClick={openModal}
+        className={`${styles.buttonOptions} ${styles.button}`}
+      >
         <MdMoreVert className={`${styles.buttonIcon} ${styles.buttonIcon__options}`} />
       </button>
     </header>
